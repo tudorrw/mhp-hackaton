@@ -34,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
                 booking.setDesk(deskRepo.getById(bookingDTO.getDeskId()));
                 booking.setDate(bookingDTO.getDate());
 
-                // Save the booking to the database
+                // Save the xbooking to the database
                 bookingRepo.save(booking);
                 return new LoginMessage("Desk booked successfully.",true);
             } else {

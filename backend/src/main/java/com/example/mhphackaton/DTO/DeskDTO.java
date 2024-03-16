@@ -10,9 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeskDTO {
-    private Long id;
+    private int id;
     private String name;
-    private Long officeFloorId;
+    private int officeFloorId;
 
     @Override
     public String toString() {

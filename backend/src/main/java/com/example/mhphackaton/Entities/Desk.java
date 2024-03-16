@@ -19,4 +19,13 @@ public class Desk {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "office_floor_id")
     private OfficeFloor officeFloor;
+
+    @Override
+    public String toString() {
+        return "Desk{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", officeFloor=" + officeFloor +
+                '}';
+    }
 }
