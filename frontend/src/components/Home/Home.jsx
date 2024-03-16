@@ -12,11 +12,13 @@ import axios from 'axios';
 function Home() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDesk, setSelectedDesk] = useState(null);
-    const userId = 3; // Placeholder for user ID
+    const userId = 4; // Placeholder for user ID
     const [selectedDate, setSelectedDate] = useState(dayjs());
 
-    const handleButtonClick = (buttonId) => {
+    const handleButtonClick = (event, buttonId) => {
+        setAnchorEl(event.currentTarget);
         setSelectedDesk(parseInt(buttonId));
+        console.log(`Button ${buttonId} was clicked.`);
     };
 
     const handleClose = () => {
@@ -50,7 +52,7 @@ function Home() {
         itemIds.forEach((itemId) => {
             const itemElement = document.getElementById(itemId);
             if (itemElement) {
-                itemElement.addEventListener('click', () => handleButtonClick(itemId));
+                itemElement.addEventListener('click', (event) => handleButtonClick(event, itemId));
             }
         });
 
