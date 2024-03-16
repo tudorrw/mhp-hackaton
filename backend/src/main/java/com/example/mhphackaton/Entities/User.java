@@ -1,4 +1,4 @@
-package com.example.mhphackaton.UserAuthentication;
+package com.example.mhphackaton.Entities;
 
 import jakarta.persistence.*;
 import lombok.*;
