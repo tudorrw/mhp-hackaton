@@ -11,12 +11,12 @@ import Register from "./components/Register/Register"
 function App() {
   return (
       <div className="wrapper">
-        <h1>Application</h1>
+        {/*<h1>Application</h1>*/}
           <Routes>
               <Route path="/" element={<Auth />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/booking" element={<Home />} />
 
           </Routes>
       </div>
