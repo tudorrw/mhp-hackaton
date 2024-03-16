@@ -7,26 +7,34 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
+import axios from 'axios';
 
 function Home() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [selectedDesk, setSelectedDesk] = useState('');
-    const userId = 'placeholderUserId'; // Placeholder for user ID
+    const [selectedDesk, setSelectedDesk] = useState(null);
+    const userId = 3; // Placeholder for user ID
     const [selectedDate, setSelectedDate] = useState(dayjs());
 
-    const handleButtonClick = (event, buttonId) => {
-        setAnchorEl(event.currentTarget);
-        setSelectedDesk(buttonId);
-        console.log(`Button ${buttonId} was clicked.`);
+    const handleButtonClick = (buttonId) => {
+        setSelectedDesk(parseInt(buttonId));
     };
 
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const handleReserveClick = () => {
+    const handleReserveClick = async () => {
+        try {
+            const response = await axios.post("http://localhost:8080/booking", {
+                userId: userId,
+                deskId: selectedDesk,
+                date: selectedDate.format("YYYY-MM-DD"),
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error booking desk:", error);
+        }
         console.log(`Reserving Desk: ${selectedDesk} for User ID: ${userId} on Date: ${selectedDate.format("YYYY-MM-DD")}`);
-        // Here you could also call a function to send reservation data to your backend
         handleClose(); // Close the popover after clicking reserve
     };
 
@@ -35,14 +43,14 @@ function Home() {
 
     useEffect(() => {
         const itemIds = [
-            ...Array.from({ length: 140 }, (_, i) => `Desk ${i + 1}`),
+            ...Array.from({ length: 140 }, (_, i) => `${i + 1}`),
             "Pit-Lane", "Quick 8", "Dry-Lane", "Joker Lap", "Pole Position", "Cockpit"
         ];
 
         itemIds.forEach((itemId) => {
             const itemElement = document.getElementById(itemId);
             if (itemElement) {
-                itemElement.addEventListener('click', (event) => handleButtonClick(event, itemId));
+                itemElement.addEventListener('click', () => handleButtonClick(itemId));
             }
         });
 
