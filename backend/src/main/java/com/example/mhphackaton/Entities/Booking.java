@@ -19,10 +19,10 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne()
+    @OneToOne
     @JoinColumn(name = "desk_id")
     private Desk desk;
     private LocalDate date;

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -31,9 +32,10 @@ public class BookingServiceImpl implements BookingService {
                 // Create a new booking entity
                 Booking booking = new Booking();
                 booking.setId(bookingDTO.getUserId());
+                booking.setUser(userRepo.getById(bookingDTO.getUserId()));
                 booking.setDesk(deskRepo.getById(bookingDTO.getDeskId()));
                 booking.setDate(bookingDTO.getDate());
-
+                booking.setCreatedAt(bookingDTO.getCreatedAt());
                 // Save the xbooking to the database
                 bookingRepo.save(booking);
                 return new LoginMessage("Desk booked successfully.",true);
@@ -45,10 +47,11 @@ public class BookingServiceImpl implements BookingService {
         }
     }
     private boolean isUserAvailableForBooking(int userId, LocalDate date) {
-        return true;
+        List<Booking> userBookings = bookingRepo.findByUserIdAndDate(userId, date);
+        return userBookings.isEmpty();
     }
     private boolean isDeskAvailable(int deskId, LocalDate date) {
-        return true;
+        List<Booking> deskBookings = bookingRepo.findByDeskIdAndDate(deskId, date);
+        return deskBookings.isEmpty();
     }
-
 }

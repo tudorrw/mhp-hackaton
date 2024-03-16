@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 
 public interface DeskRepo extends JpaRepository<Desk, Integer> {
-
+    Desk getById(int id);
 }

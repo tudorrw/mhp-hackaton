@@ -18,5 +18,11 @@ public class OfficeFloor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Override
+    public String toString() {
+        return "OfficeFloor{" +
+                "id=" + id +
+                '}';
+    }
 }
 
