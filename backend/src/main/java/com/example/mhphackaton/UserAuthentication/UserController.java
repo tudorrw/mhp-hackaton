@@ -11,7 +11,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(path="/save")
+    @PostMapping(path="/register")
     public String addUser(@RequestBody UserDTO userDTO)
     {
         return userService.addUser(userDTO);

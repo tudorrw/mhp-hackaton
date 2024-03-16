@@ -49,11 +49,11 @@ public class UserImpl implements UserService {
                 }
             }
             else {
-                return new LoginMessage("password doesn't match", false);
+                return new LoginMessage("Password not match", false);
             }
         }
         else {
-            return new LoginMessage("Email doesn't exist", false);
+            return new LoginMessage("Email not exist", false);
         }
     }
 
