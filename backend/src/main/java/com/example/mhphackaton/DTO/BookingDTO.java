@@ -16,16 +16,13 @@ public class BookingDTO {
     private int userId;
     private int deskId;
     private LocalDate date;
-    private LocalDateTime createdAt;
 
     @Override
     public String toString() {
         return "BookingDTO{" +
                 "userId=" + userId +
                 ", deskId=" + deskId +
-                ", date=" + date +
-                ", createdAt=" + createdAt +
-                '}';
+                ", date=" + date + "}";
     }
 }
 

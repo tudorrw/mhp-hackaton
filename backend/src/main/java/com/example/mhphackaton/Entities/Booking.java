@@ -26,5 +26,4 @@ public class Booking {
     @JoinColumn(name = "desk_id")
     private Desk desk;
     private LocalDate date;
-    private LocalDateTime createdAt;
 }

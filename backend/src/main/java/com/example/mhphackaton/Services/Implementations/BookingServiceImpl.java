@@ -35,7 +35,6 @@ public class BookingServiceImpl implements BookingService {
                 booking.setUser(userRepo.getById(bookingDTO.getUserId()));
                 booking.setDesk(deskRepo.getById(bookingDTO.getDeskId()));
                 booking.setDate(bookingDTO.getDate());
-                booking.setCreatedAt(bookingDTO.getCreatedAt());
                 // Save the xbooking to the database
                 bookingRepo.save(booking);
                 return new LoginMessage("Desk booked successfully.",true);

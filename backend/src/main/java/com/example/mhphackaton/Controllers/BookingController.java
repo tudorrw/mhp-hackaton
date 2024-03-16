@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/home")
+@RequestMapping("/booking")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @PostMapping(path = "/book_desk")
+    @PostMapping
     public ResponseEntity<?> addBooking(@RequestBody BookingDTO bookingDTO) {
         LoginMessage loginMessage = bookingService.bookDesk(bookingDTO);
         return ResponseEntity.ok(loginMessage);
