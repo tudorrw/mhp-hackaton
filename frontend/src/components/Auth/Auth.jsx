@@ -10,7 +10,7 @@ export default function Home(){
             <div className="row h-100">
                 <div className="col-12">
                     <h1>Welcome to this React Application</h1>
-                    <p><Link to="/home">Desk Booking</Link> |<Link to="/login">Login</Link> | <Link to="/register" className="btn btn-success">Register</Link> </p>
+                    <p><Link to="/booking">Desk Booking</Link> |<Link to="/login">Login</Link> | <Link to="/register" className="btn btn-success">Register</Link> </p>
                 </div>
             </div>
         </div>

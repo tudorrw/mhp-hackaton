@@ -13,6 +13,7 @@ function Home() {
     const [selectedDesk, setSelectedDesk] = useState('');
     const userId = 'placeholderUserId'; // Placeholder for user ID
     const [selectedDate, setSelectedDate] = useState(dayjs());
+
     const handleButtonClick = (event, buttonId) => {
         setAnchorEl(event.currentTarget);
         setSelectedDesk(buttonId);
