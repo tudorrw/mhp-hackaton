@@ -34,3 +34,25 @@ CREATE TABLE `mhp-hackaton`.`booking` (
   CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 )
 
+CREATE TABLE `mhp-hackaton`.`conference_room` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `office_floor_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `office_floor_id` (`office_floor_id`),
+  CONSTRAINT `conference_room_ibfk_1` FOREIGN KEY (`office_floor_id`) REFERENCES `office_floor` (`id`)
+);
+
+CREATE TABLE `mhp-hackaton`.`conference_room_booking` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `conference_room_id` int NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_user_id_idx` (`user_id`),
+  KEY `FK_conference_room_id_idx` (`conference_room_id`),
+  CONSTRAINT `FK_conference_room_booking_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_conference_room_booking_conference_room_id` FOREIGN KEY (`conference_room_id`) REFERENCES `conference_room` (`id`)
+);
+
