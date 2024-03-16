@@ -1,0 +1,36 @@
+CREATE TABLE `mhp-hackaton`.`user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `password` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) 
+
+CREATE TABLE `mhp-hackaton`.`office_floor` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) 
+
+CREATE TABLE `mhp-hackaton`.`desk` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `office_floor_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `office_floor_id` (`office_floor_id`),
+  CONSTRAINT `desk_ibfk_1` FOREIGN KEY (`office_floor_id`) REFERENCES `office_floor` (`id`)
+) 
+
+CREATE TABLE `mhp-hackaton`.`booking` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `desk_id` int NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_user_id_idx` (`user_id`),
+  KEY `FK_desk_id_idx` (`desk_id`),
+  CONSTRAINT `FK_desk_id` FOREIGN KEY (`desk_id`) REFERENCES `desk` (`id`),
+  CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+)
+
