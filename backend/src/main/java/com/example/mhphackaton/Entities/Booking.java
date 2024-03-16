@@ -26,4 +26,14 @@ public class Booking {
     @JoinColumn(name = "desk_id")
     private Desk desk;
     private LocalDate date;
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", user=" + user +
+                ", desk=" + desk +
+                ", date=" + date +
+                '}';
+    }
 }

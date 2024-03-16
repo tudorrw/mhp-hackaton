@@ -26,20 +26,27 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public LoginMessage bookDesk(BookingDTO bookingDTO) {
+        System.out.println(bookingDTO);
         if (isUserAvailableForBooking(bookingDTO.getUserId(), bookingDTO.getDate())) {
-            // Check if the desk is available for booking
-            if (isDeskAvailable(bookingDTO.getDeskId(), bookingDTO.getDate())) {
-                // Create a new booking entity
-                Booking booking = new Booking();
-                booking.setId(bookingDTO.getUserId());
-                booking.setUser(userRepo.getById(bookingDTO.getUserId()));
-                booking.setDesk(deskRepo.getById(bookingDTO.getDeskId()));
-                booking.setDate(bookingDTO.getDate());
-                // Save the xbooking to the database
-                bookingRepo.save(booking);
-                return new LoginMessage("Desk booked successfully.",true);
+            System.out.println(bookingDTO.getUserId()+ " " + bookingDTO.getDate());
+            if(deskRepo.existsById(bookingDTO.getDeskId())) {
+                System.out.println(bookingDTO.getDeskId());
+                if (isDeskAvailable(bookingDTO.getDeskId(), bookingDTO.getDate())) {
+                    // Create a new booking entity
+                    Booking booking = new Booking();
+                    booking.setId(bookingDTO.getUserId());
+                    booking.setUser(userRepo.getById(bookingDTO.getUserId()));
+                    booking.setDesk(deskRepo.getById(bookingDTO.getDeskId()));
+                    booking.setDate(bookingDTO.getDate());
+                    System.out.println(booking);
+                    // Save the xbooking to the database
+                    bookingRepo.save(booking);
+                    return new LoginMessage("Desk booked successfully.",true);
+                } else {
+                    return new LoginMessage("Desk is not available for booking at the specified date and time.", false);
+                }
             } else {
-                return new LoginMessage("Desk is not available for booking at the specified date and time.", false);
+                return new LoginMessage("Desk doesn't exist", false);
             }
         } else {
             return new LoginMessage("User already has a booking at the specified date and time.", false);
