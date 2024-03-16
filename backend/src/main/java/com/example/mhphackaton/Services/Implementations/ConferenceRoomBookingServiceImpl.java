@@ -27,16 +27,14 @@ public class ConferenceRoomBookingServiceImpl implements ConferenceRoomBookingSe
                 // Create a new booking entity
                 ConferenceRoomBooking booking = new ConferenceRoomBooking();
                 booking.setId(conferenceRoomBookingDTO.getUserId());
-                //TODO
-//                booking.setRoom(conferenceRoomRepo.getById(conferenceRoomBookingDTO.getConferenceRoomId()));
+                booking.setRoom(conferenceRoomRepo.getById(conferenceRoomBookingDTO.getConferenceRoomId()));
                 booking.setDate(conferenceRoomBookingDTO.getDate());
 
                 // Save the booking to the database
-                //TODO
-//                conferenceRoomBookingRepo.save(booking);
-                return new LoginMessage("Desk booked successfully.",true);
+                conferenceRoomBookingRepo.save(booking);
+                return new LoginMessage("Conference Room booked successfully.",true);
             } else {
-                return new LoginMessage("Desk is not available for booking at the specified date and time.", false);
+                return new LoginMessage("Conference Room is not available for booking at the specified date and time.", false);
             }
         } else {
             return new LoginMessage("User already has a booking at the specified date and time.", false);
