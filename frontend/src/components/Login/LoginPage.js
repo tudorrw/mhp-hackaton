@@ -51,7 +51,7 @@ export default function SignInSide() {
             if (response.data.message === "Email not exist") {
                 alert("Email not exists");
             } else if(response.data.message === "Login success") {
-                navigate('/home');
+                navigate('/booking');
             } else {
                 alert("Incorrect Email and Password not match");
             }
