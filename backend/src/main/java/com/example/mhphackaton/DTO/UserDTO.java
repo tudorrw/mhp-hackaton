@@ -1,4 +1,4 @@
-package com.example.mhphackaton.UserAuthentication;
+package com.example.mhphackaton.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.mhphackaton.UserAuthentication;
+package com.example.mhphackaton.Repositories;
 
 import com.example.mhphackaton.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
