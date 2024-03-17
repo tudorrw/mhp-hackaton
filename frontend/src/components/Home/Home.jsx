@@ -12,8 +12,9 @@ import axios from 'axios';
 function Home() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDesk, setSelectedDesk] = useState(null);
-    const userId = 4; // Placeholder for user ID
+    const userId = 11; // Placeholder for user ID
     const [selectedDate, setSelectedDate] = useState(dayjs());
+    const [reservedDesks, setReservedDesks] = useState([]);
 
     const handleButtonClick = (event, buttonId) => {
         setAnchorEl(event.currentTarget);
@@ -32,7 +33,16 @@ function Home() {
                 deskId: selectedDesk,
                 date: selectedDate.format("YYYY-MM-DD"),
             });
-            console.log(response.data);
+            // Add the reserved desk to the list
+            setReservedDesks(prevDesks => [...prevDesks, selectedDesk]);
+            console.log(response);
+            if(response.data.message === "Desk booked successfully.") {
+              alert("Desk booked successfully.");
+            } else if(response.data.message === "Desk is not available for booking at the specified date and time.") {
+              alert("Desk is not available for booking at the specified date and time.");
+            } else {
+              alert("User already has a booking at the specified date and time.");
+            }
         } catch (error) {
             console.error("Error booking desk:", error);
         }
@@ -43,16 +53,41 @@ function Home() {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+
+    useEffect(() => {
+      // Ensure selectedDate is not null or undefined before fetching reserved desks
+      if (selectedDate) {
+          // Fetch reserved desks for the selected date
+          const fetchReservedDesks = async () => {
+              try {
+                  const response = await axios.get(`http://localhost:8080/booking/${selectedDate.format("YYYY-MM-DD")}`);
+                  // Update the reserved desks state
+                  setReservedDesks(response.data, reservedDesks);
+              } catch (error) {
+                  console.error("Error fetching reserved desks:", error);
+              }
+          };
+  
+          // Call the fetchReservedDesks function
+          fetchReservedDesks();
+      }
+  }, [selectedDate]); // Add selectedDate as a dependency to rerun the effect whenever it changes
+  
+
     useEffect(() => {
         const itemIds = [
             ...Array.from({ length: 140 }, (_, i) => `${i + 1}`),
             "Pit-Lane", "Quick 8", "Dry-Lane", "Joker Lap", "Pole Position", "Cockpit"
         ];
 
+        const reservedDeskIds = reservedDesks.map(reservedDesk => reservedDesk.deskId);
+
         itemIds.forEach((itemId) => {
             const itemElement = document.getElementById(itemId);
             if (itemElement) {
                 itemElement.addEventListener('click', (event) => handleButtonClick(event, itemId));
+                itemElement.setAttribute('fill', reservedDeskIds.includes(parseInt(itemId)) ? "#CF1325" : "#B6CE72");
+                console.log(reservedDesks);
             }
         });
 
@@ -64,7 +99,7 @@ function Home() {
                 }
             });
         };
-    }, []);
+    }, [reservedDesks]);
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
@@ -83,8 +118,8 @@ function Home() {
                     renderInput={(params) => <TextField {...params} />}
                 />
             </LocalizationProvider>
+            <FloorPlanSVG style={{ maxWidth: '100%', height: 'auto' }}/>
 
-            <FloorPlanSVG style={{ maxWidth: '100%', height: 'auto' }} />
             <Popover
                 id={id}
                 open={open}
@@ -99,8 +134,9 @@ function Home() {
                     <Typography>Selected Desk: {selectedDesk}</Typography>
                     <Button onClick={handleClose} sx={{ mt: 1 }}>Close</Button>
                     <Button onClick={handleReserveClick} color="primary" variant="contained" sx={{ mt: 1, ml: 1 }}>
-                        Reserve
-                    </Button>
+                            Reserve
+                        </Button>
+
                 </Box>
             </Popover>
         </Box>
