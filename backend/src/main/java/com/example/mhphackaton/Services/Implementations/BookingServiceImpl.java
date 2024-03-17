@@ -1,6 +1,7 @@
 package com.example.mhphackaton.Services.Implementations;
 
 import com.example.mhphackaton.DTO.BookingDTO;
+import com.example.mhphackaton.DTO.BookingMapper;
 import com.example.mhphackaton.DTO.DeskDTO;
 import com.example.mhphackaton.Entities.Booking;
 import com.example.mhphackaton.Repositories.BookingRepo;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -59,5 +61,13 @@ public class BookingServiceImpl implements BookingService {
     private boolean isDeskAvailable(int deskId, LocalDate date) {
         List<Booking> deskBookings = bookingRepo.findByDeskIdAndDate(deskId, date);
         return deskBookings.isEmpty();
+    }
+
+    @Override
+    public List<BookingDTO> getBookingsByDate(LocalDate date) {
+        List<Booking> bookings = bookingRepo.findByDate(date);
+        return bookings.stream()
+                .map(BookingMapper::mapToDTO)
+                .collect(Collectors.toList());
     }
 }
