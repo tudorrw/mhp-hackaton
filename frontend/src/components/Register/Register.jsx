@@ -16,7 +16,7 @@ function Register() {
           email: email,
           password: password,
           });
-          alert("Employee Registation Successfully");
+          alert("User Registation Successfully");
 
         } catch (err) {
           alert(err);
