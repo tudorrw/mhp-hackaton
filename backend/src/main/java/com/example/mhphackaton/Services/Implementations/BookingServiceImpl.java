@@ -28,16 +28,15 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public LoginMessage bookDesk(BookingDTO bookingDTO) {
-        System.out.println(bookingDTO);
         if(userRepo.existsById(bookingDTO.getUserId())) {
+            System.out.println(isUserAvailableForBooking(bookingDTO.getUserId(), bookingDTO.getDate()) + " (user available)");
             if (isUserAvailableForBooking(bookingDTO.getUserId(), bookingDTO.getDate())) {
-                System.out.println(bookingDTO.getUserId()+ " " + bookingDTO.getDate());
+                System.out.println(deskRepo.existsById(bookingDTO.getDeskId()) + " (desk exists)");
                 if(deskRepo.existsById(bookingDTO.getDeskId())) {
-                    System.out.println(bookingDTO.getDeskId());
+                    System.out.println(isDeskAvailable(bookingDTO.getDeskId(), bookingDTO.getDate()) + " (desk available)");
                     if (isDeskAvailable(bookingDTO.getDeskId(), bookingDTO.getDate())) {
                         // Create a new booking entity
                         Booking booking = new Booking();
-                        booking.setId(bookingDTO.getUserId());
                         booking.setUser(userRepo.getById(bookingDTO.getUserId()));
                         booking.setDesk(deskRepo.getById(bookingDTO.getDeskId()));
                         booking.setDate(bookingDTO.getDate());
@@ -49,14 +48,13 @@ public class BookingServiceImpl implements BookingService {
                         return new LoginMessage("Desk is not available for booking at the specified date and time.", false);
                     }
                 } else {
-                    return new LoginMessage("Desk doesn't exist", false);
+                    return new LoginMessage("Desk doesn't exist.", false);
                 }
             } else {
                 return new LoginMessage("User already has a booking at the specified date and time.", false);
             }
-        }
-        else {
-            return new LoginMessage("User not exist", false);
+        } else {
+            return new LoginMessage("User doesn't exist.", false);
         }
     }
     private boolean isUserAvailableForBooking(int userId, LocalDate date) {
