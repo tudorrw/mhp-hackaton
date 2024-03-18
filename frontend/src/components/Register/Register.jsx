@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import { Container, Typography, TextField, Button, Box } from "@mui/material";
+
 
 function Register() {
   
@@ -24,55 +26,61 @@ function Register() {
       }
   
     return (
-    <div>
-    <div className="container mt-4" >
-    <div className="card">
-            <h1>USer Registation</h1>
-    
-    <form>
-        <div className="form-group">
-          <label>Employee name</label>
-          <input type="text"  className="form-control" id="username" placeholder="Enter Name"
-          
-          value={username}
-          onChange={(event) => {
-            setUsername(event.target.value);
-          }}
-          />
 
-        </div>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
+            <Typography variant="h4" gutterBottom>
+                User Registration
+            </Typography>
 
-        <div className="form-group">
-          <label>email</label>
-          <input type="email"  className="form-control" id="email" placeholder="Enter Email"
-          
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-          
-          />
- 
-        </div>
+            <Box component="form" onSubmit={save} noValidate sx={{ mt: 1 }}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="username"
+                    label="Employee Name"
+                    name="username"
+                    autoComplete="username"
+                    autoFocus
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
+                />
 
-        <div className="form-group">
-            <label>password</label>
-            <input type="password"  className="form-control" id="password" placeholder="Enter password"
-            
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-            
-            />
-          </div>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                />
 
-        <button type="submit" className="btn btn-primary mt-4" onClick={save} >Save</button>
-       
-      </form>
-    </div>
-    </div>
-     </div>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                />
+
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Register
+                </Button>
+            </Box>
+        </Container>
     );
   }
   

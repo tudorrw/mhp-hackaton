@@ -1,19 +1,22 @@
-import React, { } from "react";
- 
-import {Link} from 'react-router-dom';
- 
-export default function Home(){
- 
-  return (
-    <div>
-        <div className="container h-100">
-            <div className="row h-100">
-                <div className="col-12">
-                    <h1>Welcome to this React Application</h1>
-                    <p><Link to="/booking">Desk Booking</Link> |<Link to="/login">Login</Link> | <Link to="/register" className="btn btn-success">Register</Link> </p>
-                </div>
-            </div>
-        </div>
-    </div>
-  );
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Typography, Button, Box } from "@mui/material";
+
+export default function Home() {
+    return (
+        <Container maxWidth="md" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Typography variant="h2" component="h1" gutterBottom align="center">
+                Welcome to Masa mea!
+            </Typography>
+            <Box mt={4} style={{ textAlign: 'center' }}>
+
+                <Button component={Link} to="/login" variant="outlined" color="primary" style={{ marginRight: '20px' }}>
+                    Login
+                </Button>
+                <Button component={Link} to="/register" variant="contained" color="success">
+                    Register
+                </Button>
+            </Box>
+        </Container>
+    );
 }
