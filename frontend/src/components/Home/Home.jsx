@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as FloorPlanSVG } from './mhp_floor_final.svg';
 import Typography from "@mui/material/Typography";
-import { Popover, Button, Box } from "@mui/material";
+import {Popover, Button, Box, AppBar, Toolbar} from "@mui/material";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import axios from 'axios';
+import logo from './mhplogo.jpg';
 
 function Home() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedDesk, setSelectedDesk] = useState(null);
-    const userId = 11; // Placeholder for user ID
+    const userId = 4; // Placeholder for user ID
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [reservedDesks, setReservedDesks] = useState([]);
 
@@ -35,13 +36,16 @@ function Home() {
             });
             // Add the reserved desk to the list
             setReservedDesks(prevDesks => [...prevDesks, selectedDesk]);
-            console.log(response);
+            console.log(response.data);
             if(response.data.message === "Desk booked successfully.") {
               alert("Desk booked successfully.");
+              window.location.reload()
             } else if(response.data.message === "Desk is not available for booking at the specified date and time.") {
               alert("Desk is not available for booking at the specified date and time.");
-            } else {
+            } else if(response.data.message === "User already has a booking at the specified date and time."){
               alert("User already has a booking at the specified date and time.");
+            } else {
+              alert("User does not exist");
             }
         } catch (error) {
             console.error("Error booking desk:", error);
@@ -87,7 +91,6 @@ function Home() {
             if (itemElement) {
                 itemElement.addEventListener('click', (event) => handleButtonClick(event, itemId));
                 itemElement.setAttribute('fill', reservedDeskIds.includes(parseInt(itemId)) ? "#CF1325" : "#B6CE72");
-                console.log(reservedDesks);
             }
         });
 
@@ -102,9 +105,24 @@ function Home() {
     }, [reservedDesks]);
 
     return (
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+                        <img src={logo} alt="Logo" style={{ maxHeight: '50px', marginRight: '10px', borderRadius: '10px' }} />
+                        <Typography variant="h6" component="div">
+                            Desk Managing System
+                        </Typography>
+                    </Box>
+                    <Button color="inherit" onClick={() => console.log('Sign out logic here')}>
+                        Sign Out
+                    </Button>
+                </Toolbar>
+            </AppBar>
+
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
             <Typography variant="h4" component="h1" gutterBottom>
-                Desk Managing System
+
             </Typography>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -139,6 +157,7 @@ function Home() {
 
                 </Box>
             </Popover>
+        </Box>
         </Box>
     );
 }
